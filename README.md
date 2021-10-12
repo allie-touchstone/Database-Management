@@ -11,5 +11,6 @@ Group Assignment #1
 
 Group Assignment #2
 * DDL Script Instructions
+* DDL Script Instructions Diagram
 * DDL Script
 * Executive Summary
