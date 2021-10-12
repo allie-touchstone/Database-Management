@@ -5,5 +5,11 @@ Group Members: Aritra Chowdhury, Vishal Gupta, Sbhinav Sharma, Avery Shepherd, A
 
 ## Database Design Assignment
 Group Assignment #1
+* Database Design Instructions
+* Datebase Design Diagram
+* Executive Summary
 
 Group Assignment #2
+* DDL Script Instructions
+* DDL Script
+* Executive Summary
