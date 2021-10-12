@@ -5,3 +5,4 @@ Group Members: Aritra Chowdhury, Vishal Gupta, Sbhinav Sharma, Avery Shepherd, A
 
 ## Database Design Assignment
 Group Assignment #1
+Group Assignment #2
