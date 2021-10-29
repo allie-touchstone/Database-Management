@@ -14,3 +14,8 @@ Group Assignment #2
 * DDL Script Instructions Diagram
 * DDL Script
 * Executive Summary
+
+Group Assignment #3
+* Database Querying Instructions
+* Database Querying
+* Executive Summary
