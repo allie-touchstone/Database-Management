@@ -20,3 +20,7 @@ Group Assignment #3
 * Database Querying Starter DDL Script
 * Database Querying
 * Executive Summary
+
+Group Assignment #4
+* Summary and Subquery Instructions
+* Summary and Subquery Starter DDL Script
