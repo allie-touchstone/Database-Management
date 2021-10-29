@@ -17,5 +17,6 @@ Group Assignment #2
 
 Group Assignment #3
 * Database Querying Instructions
+* Starter DDL Script
 * Database Querying
 * Executive Summary
