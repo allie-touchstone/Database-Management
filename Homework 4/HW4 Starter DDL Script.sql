@@ -120,7 +120,7 @@ create table reservation_details(
 
 commit;
 
--- Insert Data section - Area of the script that inserts data into the tables using ìINSERT INTOî
+-- Insert Data section - Area of the script that inserts data into the tables using ‚ÄúINSERT INTO‚Äù
 Insert into LOCATION (LOCATION_NAME,ADDRESS,CITY,STATE,ZIP,PHONE,URL) values ('South Congress Boutique','1602 South Congress','Austin','TX','78704','512-347-9784','www.socohotel.com');
 Insert into LOCATION (LOCATION_NAME,ADDRESS,CITY,STATE,ZIP,PHONE,URL) values ('East 7th Lofts','918 7th Street','Austin','TX','78702','512-347-0963','www.east7thlofts.com');
 Insert into LOCATION (LOCATION_NAME,ADDRESS,CITY,STATE,ZIP,PHONE,URL) values ('Balcones Canyonlands Cabins','991 Old Hollow Rd','Marble Falls','TX','78654','512-347-0963','www.balconescabins.com');
@@ -1151,7 +1151,7 @@ Insert into RESERVATION_DETAILS (RESERVATION_ID,ROOM_ID) values (430,42);
 
 commit;
 
--- Create Index section ñ After you seed data, add in indexes for the database to optimize performance 
+-- Create Index section ‚Äì After you seed data, add in indexes for the database to optimize performance 
 CREATE INDEX Reservation_Customer_ID_idx  
 ON Reservation (Customer_ID);
 
