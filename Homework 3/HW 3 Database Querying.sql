@@ -33,7 +33,7 @@ ORDER BY expiration_date ASC;
 /*Write a SELECT statement that returns one column from the Customer table named 
 customer_full_name that combines the first_name and last_name columns. Format 
 this column with the first name, a space, and last name like this: Michael 
-Jordan. Sort the result set by last name in descending sequence. Use the “IN�? 
+Jordan. Sort the result set by last name in descending sequence. Use the â€œINâ€? 
 operator to return only the customers whose first name begins with letters 
 of A, B, or C.*/
 
@@ -46,7 +46,7 @@ ORDER BY last_name DESC;
 ---Question 3
 /* Write a SELECT statement that returns these columns from Reservation: 
 customer_id, confirmation_nbr, date_created, check_in_date, and number_of_guests. 
-Return only the rows for reservations that have a status of “upcoming�? that have 
+Return only the rows for reservations that have a status of â€œupcomingâ€? that have 
 check_in_dates that are today or in the future but only for this year. That means 
 to filter where only the check_in_date is greater or equal the current date 
 (note: use SYSDATE here) and on or before Dec 31st  See if you can do this with 
@@ -90,7 +90,7 @@ Reservation table:
     location_id     The location_id column
     length_of_stay  This is calculated by subtracting check_in_date from 
         the check_out_date. Assign an alias of length_of_stay 
-Filter the query to only show completed reservations (i.e. status = ‘C’).  
+Filter the query to only show completed reservations (i.e. status = â€˜Câ€™).  
 After you have that running correctly, update filter to use the ROWNUM pseudo 
 column so the result set contains only the first 10 rows from the table.
 
@@ -119,7 +119,7 @@ ORDER BY credits_available;
 
 ---Question 7
 /* Write a SELECT statement that returns the first, middle, and last name of a 
-customer’s payment profile on Customer_Payment
+customerâ€™s payment profile on Customer_Payment
     Using the NULL operator, return only rows for those customers with a middle 
     name. Sort by column positions 2 and then 3 in ascending order */
 
@@ -196,7 +196,7 @@ rooms customers are staying in. Only return rows for upcoming reservations
 (i.e. status of U) and for customers that have earned more than 40 credits.  
 The query should display the following columns:
 
-Name – a concatenation of a customer’s first and last name like so: e.g. Tayfun Keskin
+Name â€“ a concatenation of a customerâ€™s first and last name like so: e.g. Tayfun Keskin
 Location_ID
 Confirmation_Nbr
 Check_in_date
@@ -214,9 +214,9 @@ WHERE R.status = 'U' and C.stay_credits_earned > 40;
 
 
 ---Question 12
-/* Write a query that returns any customers in our system’s customer table that 
+/* Write a query that returns any customers in our systemâ€™s customer table that 
 have never had a reservation. Show that you can use the proper type of join that
-will return all customers even when there’s no matching reservation for them. 
+will return all customers even when thereâ€™s no matching reservation for them. 
 Results should display the following columns for the customer: first_name, 
 last_name, confirmation_nbr, date_created, check_in_date, check_out_date */
 
@@ -231,18 +231,18 @@ WHERE R.customer_id is NULL;
 /* Use the UNION operator to generate a result set consisting of five columns 
 (four directly from the Customer table, and one calculated) as below:
 
-Status_level       A calculated column that contains a value of ‘1-Gold Member’, ‘2-Platinum Member’, or ‘3-Diamond Club’
+Status_level       A calculated column that contains a value of â€˜1-Gold Memberâ€™, â€˜2-Platinum Memberâ€™, or â€˜3-Diamond Clubâ€™
 First_name
 Last_name
 Email
 Stay_Credits_earned
 
-If the customer has less than 10 credits (i.e. they haven’t earned a free stay 
+If the customer has less than 10 credits (i.e. they havenâ€™t earned a free stay 
 yet),they are considered to be Gold Level and so their status_level column 
-should contain a literal string value of ‘1-Gold Member’. If the customer has 
+should contain a literal string value of â€˜1-Gold Memberâ€™. If the customer has 
 earned more than or equal to 10 credits but less than 40, their status_level 
-column should contain a literal string value of ‘2-Platinum Member’. Otherwise, 
-it the status_level is ‘3-Diamond Club’
+column should contain a literal string value of â€˜2-Platinum Memberâ€™. Otherwise, 
+it the status_level is â€˜3-Diamond Clubâ€™
 
 Sort the final result set by the first and third columns in the results. */
 
