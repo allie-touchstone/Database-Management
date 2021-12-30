@@ -1,0 +1,399 @@
+-----------------------------------------------------------------------------------------------------------------
+/*
+
+INTRO TO DATA MANAGEMENT
+HOMEWORK 2: DDL SCRIPT ASSIGNMENT
+
+by
+Abhinav Sharma      ass2575
+Allie Touchstone    awt529
+Aritra Chowdhury    ac79277
+Avery Shepherd      ams9694
+Harsh Mehta         hdm564
+Vishal Gupta        vg22846
+
+This Project was worked on by all 6 people and the best combination of code was ultimately decided on. 
+
+*/
+-----------------------------------------------------------------------------------------------------------------
+
+BEGIN EXECUTE IMMEDIATE 'DROP TABLE App_Function_Details'; EXCEPTION WHEN OTHERS THEN NULL; END; 
+/
+BEGIN EXECUTE IMMEDIATE 'DROP TABLE Employee'; EXCEPTION WHEN OTHERS THEN NULL; END; 
+/
+BEGIN EXECUTE IMMEDIATE 'DROP TABLE Office_Locations'; EXCEPTION WHEN OTHERS THEN NULL; END; 
+/
+BEGIN EXECUTE IMMEDIATE 'DROP TABLE App_Functions'; EXCEPTION WHEN OTHERS THEN NULL; END; 
+/
+BEGIN EXECUTE IMMEDIATE 'DROP TABLE Passenger_Comp_Transaction'; EXCEPTION WHEN OTHERS THEN NULL; END; 
+/
+BEGIN EXECUTE IMMEDIATE 'DROP TABLE Driver_Comp_Transaction'; EXCEPTION WHEN OTHERS THEN NULL; END; 
+/
+BEGIN EXECUTE IMMEDIATE 'DROP TABLE Commission_Rate'; EXCEPTION WHEN OTHERS THEN NULL; END; 
+/
+BEGIN EXECUTE IMMEDIATE 'DROP TABLE Passenger_Match'; EXCEPTION WHEN OTHERS THEN NULL; END; 
+/
+BEGIN EXECUTE IMMEDIATE 'DROP TABLE Matched_Ride'; EXCEPTION WHEN OTHERS THEN NULL; END; 
+/
+BEGIN EXECUTE IMMEDIATE 'DROP TABLE Passenger_Request'; EXCEPTION WHEN OTHERS THEN NULL; END; 
+/
+BEGIN EXECUTE IMMEDIATE 'DROP TABLE Driver_Request'; EXCEPTION WHEN OTHERS THEN NULL; END; 
+/
+BEGIN EXECUTE IMMEDIATE 'DROP TABLE Payment_Info'; EXCEPTION WHEN OTHERS THEN NULL; END; 
+/
+BEGIN EXECUTE IMMEDIATE 'DROP TABLE Car'; EXCEPTION WHEN OTHERS THEN NULL; END; 
+/
+BEGIN EXECUTE IMMEDIATE 'DROP TABLE Student'; EXCEPTION WHEN OTHERS THEN NULL; END; 
+/
+
+BEGIN EXECUTE IMMEDIATE 'DROP SEQUENCE Student_Seq';EXCEPTION WHEN OTHERS THEN NULL; END; 
+/
+BEGIN EXECUTE IMMEDIATE 'DROP SEQUENCE Car_Seq';EXCEPTION WHEN OTHERS THEN NULL; END; 
+/
+BEGIN EXECUTE IMMEDIATE 'DROP SEQUENCE Payment_Info_Seq'; EXCEPTION WHEN OTHERS THEN NULL; END; 
+/
+BEGIN EXECUTE IMMEDIATE 'DROP SEQUENCE Driver_Request_Seq'; EXCEPTION WHEN OTHERS THEN NULL; END; 
+/
+BEGIN EXECUTE IMMEDIATE 'DROP SEQUENCE Passenger_Request_Seq'; EXCEPTION WHEN OTHERS THEN NULL; END; 
+/
+BEGIN EXECUTE IMMEDIATE 'DROP SEQUENCE Matched_Ride_Seq'; EXCEPTION WHEN OTHERS THEN NULL; END; 
+/
+BEGIN EXECUTE IMMEDIATE 'DROP SEQUENCE Passenger_Match_Seq'; EXCEPTION WHEN OTHERS THEN NULL; END; 
+/
+BEGIN EXECUTE IMMEDIATE 'DROP SEQUENCE Commission_Rate_Seq'; EXCEPTION WHEN OTHERS THEN NULL; END; 
+/
+BEGIN EXECUTE IMMEDIATE 'DROP SEQUENCE Driver_Comp_Transaction_Seq'; EXCEPTION WHEN OTHERS THEN NULL; END; 
+/
+BEGIN EXECUTE IMMEDIATE 'DROP SEQUENCE Passenger_Comp_Transaction_Seq'; EXCEPTION WHEN OTHERS THEN NULL; END; 
+/
+BEGIN EXECUTE IMMEDIATE 'DROP SEQUENCE App_Functions_Seq'; EXCEPTION WHEN OTHERS THEN NULL; END; 
+/
+BEGIN EXECUTE IMMEDIATE 'DROP SEQUENCE Office_Locations_Seq'; EXCEPTION WHEN OTHERS THEN NULL; END; 
+/
+BEGIN EXECUTE IMMEDIATE 'DROP SEQUENCE Employee_Seq'; EXCEPTION WHEN OTHERS THEN NULL; END; 
+/
+BEGIN EXECUTE IMMEDIATE 'DROP SEQUENCE App_Function_Details_Seq'; EXCEPTION WHEN OTHERS THEN NULL; END; 
+/
+
+CREATE SEQUENCE Student_Seq START WITH 1;
+CREATE SEQUENCE Car_Seq START WITH 1;
+CREATE SEQUENCE Payment_Info_Seq START WITH 1;
+CREATE SEQUENCE Driver_Request_Seq START WITH 1;
+CREATE SEQUENCE Passenger_Request_Seq START WITH 1;
+CREATE SEQUENCE Matched_Ride_Seq START WITH 1;
+CREATE SEQUENCE Passenger_Match_Seq START WITH 1;
+CREATE SEQUENCE Commission_Rate_Seq START WITH 1;
+CREATE SEQUENCE Driver_Comp_Transaction_Seq START WITH 1;
+CREATE SEQUENCE Passenger_Comp_Transaction_Seq START WITH 1;
+CREATE SEQUENCE App_Functions_Seq START WITH 1;
+CREATE SEQUENCE Office_Locations_Seq START WITH 1;
+CREATE SEQUENCE Employee_Seq START WITH 1;
+CREATE SEQUENCE App_Function_Details_Seq START WITH 1;
+
+CREATE TABLE Student
+(
+    Student_ID              NUMBER          DEFAULT Student_Seq.NEXTVAL    PRIMARY KEY,
+    Uni_ID                  VARCHAR(8)      NOT NULL,
+    University_Name         VARCHAR(50)     NOT NULL,
+    First_Name              VARCHAR(50)     NOT NULL,
+    Last_Name               VARCHAR(50)     NOT NULL,
+    Email                   VARCHAR(50)     NOT NULL    UNIQUE,
+    Phone                   CHAR(12)        NOT NULL,
+    Driver_Rating           NUMBER,
+    Passenger_Rating        NUMBER,
+    Is_Driver               CHAR(1)         NOT NULL,
+    Drivers_License_Number  VARCHAR(8),
+    Drivers_License_State   CHAR(2),
+    Created_Timestamp       TIMESTAMP       DEFAULT CURRENT_TIMESTAMP,
+    Updated_Timestamp       TIMESTAMP       DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT email_length_check_student
+        CHECK (LENGTH(Email) >= 7),
+    CONSTRAINT is_driver_check_student
+        CHECK (Is_Driver IN ('Y','N')),
+    CONSTRAINT license_number_student
+        CHECK (NOT(Is_Driver = 'Y') OR Drivers_License_Number IS NOT NULL),
+    CONSTRAINT license_state_student
+        CHECK (NOT(Is_Driver = 'Y') OR Drivers_License_State IS NOT NULL)
+);
+
+CREATE TABLE Car
+(
+    Car_ID                  NUMBER          DEFAULT Car_Seq.NEXTVAL     PRIMARY KEY,
+    Student_ID              NUMBER          NOT NULL,
+    Car_Model               VARCHAR(50)     NOT NULL,
+    Car_Name                VARCHAR(50)     NOT NULL,
+    Car_License_Number      VARCHAR(8)      NOT NULL,
+    Car_Insurance_Number    VARCHAR(20)     NOT NULL,
+    Created_Timestamp       TIMESTAMP       DEFAULT CURRENT_TIMESTAMP,
+    Updated_Timestamp       TIMESTAMP       DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT car_fk_student
+        FOREIGN KEY (Student_ID) 
+        REFERENCES Student (Student_ID)
+        ON DELETE CASCADE
+);
+
+CREATE TABLE Payment_Info
+(
+    Payment_ID              NUMBER          DEFAULT Payment_Info_Seq.NEXTVAL    PRIMARY KEY,
+    Student_ID              NUMBER          NOT NULL,
+    First_Name              VARCHAR(50)     NOT NULL,
+    Middle_Name             VARCHAR(50),
+    Last_Name               VARCHAR(50)     NOT NULL,
+    Card_Number             VARCHAR(19)     NOT NULL,
+    CCV                     VARCHAR(5)      NOT NULL,
+    Exp_Date                CHAR(4)         NOT NULL,
+    Street_Address          VARCHAR(50)     NOT NULL,
+    City                    VARCHAR(50)     NOT NULL,
+    State                   CHAR(2)         NOT NULL,
+    Zipcode                 CHAR(5)         NOT NULL,
+    Created_Timestamp       TIMESTAMP       DEFAULT CURRENT_TIMESTAMP,
+    Updated_Timestamp       TIMESTAMP       DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT payment_fk_student
+        FOREIGN KEY (Student_ID) 
+        REFERENCES Student (Student_ID)
+        ON DELETE CASCADE
+);
+
+CREATE TABLE Driver_Request
+(
+    Request_ID              NUMBER          DEFAULT Driver_Request_Seq.NEXTVAL  PRIMARY KEY,
+    Car_ID                  NUMBER          NOT NULL,
+    Allowed_Passengers      NUMBER          NOT NULL,
+    Departure_Zip           CHAR(5)         NOT NULL,
+    Arrival_Zip             CHAR(5)         NOT NULL,
+    Departure_Timestamp     TIMESTAMP       NOT NULL,
+    Arrival_Timestamp       TIMESTAMP       NOT NULL,
+    Is_Flexible             CHAR(1)         NOT NULL,
+    Request_Status          CHAR(1)         NOT NULL,
+    Payment_Method          VARCHAR(20)     NOT NULL,
+    Minimum_Payment         NUMBER          DEFAULT 0   NOT NULL,
+    Notes                   VARCHAR(500),
+    Created_Timestamp       TIMESTAMP       DEFAULT CURRENT_TIMESTAMP,
+    Updated_Timestamp       TIMESTAMP       DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT driver_fk_student
+        FOREIGN KEY (Car_ID) 
+        REFERENCES Car (Car_ID)
+        ON DELETE CASCADE,
+    CONSTRAINT flexible_driver
+        CHECK (Is_Flexible IN ('Y','N')),
+    CONSTRAINT request_status_driver
+        CHECK (Request_Status IN ('M','C','R')),
+    CONSTRAINT payment_method_driver
+        CHECK (Payment_Method IN ('Venmo','Cash','Gas'))
+);
+
+CREATE TABLE Passenger_Request
+(
+    Request_ID              NUMBER          DEFAULT Passenger_Request_Seq.NEXTVAL   PRIMARY KEY,
+    Student_ID              NUMBER          NOT NULL,
+    Passenger_Count         NUMBER          DEFAULT 1   NOT NULL,
+    Departure_Zip           CHAR(5)         NOT NULL,
+    Arrival_Zip             CHAR(5)         NOT NULL,
+    Departure_Timestamp     TIMESTAMP       NOT NULL,
+    Arrival_Timestamp       TIMESTAMP       NOT NULL,
+    Is_Flexible             CHAR(1)         NOT NULL,
+    Request_Status          CHAR(1)         NOT NULL,
+    Payment_Method          VARCHAR(20)     NOT NULL,
+    Maximum_Payment         NUMBER          DEFAULT 0   NOT NULL,
+    Notes                   VARCHAR(500),
+    Created_Timestamp       TIMESTAMP       DEFAULT CURRENT_TIMESTAMP,
+    Updated_Timestamp       TIMESTAMP       DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT passenger_fk_student
+        FOREIGN KEY (Student_ID) 
+        REFERENCES Student (Student_ID)
+        ON DELETE CASCADE,
+    CONSTRAINT flexible_passenger
+        CHECK (Is_Flexible IN ('Y','N')),
+    CONSTRAINT request_status_passenger
+        CHECK (Request_Status IN ('M','C','R')),
+    CONSTRAINT payment_method_passenger
+        CHECK (Payment_Method IN ('Venmo','Cash','Gas'))
+);
+
+CREATE TABLE Matched_Ride
+(
+    Ride_ID                 NUMBER          DEFAULT Matched_Ride_Seq.NEXTVAL    PRIMARY KEY,
+    Driver_Request_ID       NUMBER          NOT NULL,
+    Passengers_Traveling    NUMBER          NOT NULL,
+    Departure_ZIP           CHAR(5)         NOT NULL,
+    Arrival_ZIP             CHAR(5)         NOT NULL,
+    Departure_Timestamp     TIMESTAMP       NOT NULL,
+    Arrival_Timestamp       TIMESTAMP       NOT NULL,
+    Ride_Status             CHAR(1)         NOT NULL,
+    Total_payment           NUMBER          DEFAULT 0   NOT NULL,
+    Created_Timestamp       TIMESTAMP       DEFAULT CURRENT_TIMESTAMP,
+    Updated_Timestamp       TIMESTAMP       DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT ride_fk_driver
+        FOREIGN KEY (Driver_Request_ID) 
+        REFERENCES Driver_Request (Request_ID)
+        ON DELETE CASCADE,
+    CONSTRAINT ride_status_matched
+        CHECK (Ride_Status IN ('P','C','F'))
+);
+
+CREATE TABLE Passenger_Match  
+(
+    Passenger_Match_ID      NUMBER          DEFAULT Passenger_Match_Seq.NEXTVAL PRIMARY KEY,
+    Passenger_Request_ID    NUMBER          NOT NULL,
+    Ride_ID                 NUMBER          NOT NULL,
+    Departure_Timestamp     TIMESTAMP       NOT NULL,
+    Arrival_Timestamp       TIMESTAMP       NOT NULL,
+    Payment_Method          VARCHAR(20)     NOT NULL,
+    Payment_Status          CHAR(1)         NOT NULL,
+    Passenger_Payable       NUMBER          DEFAULT 0   NOT NULL,
+    Created_Timestamp       TIMESTAMP       DEFAULT CURRENT_TIMESTAMP,
+    Updated_Timestamp       TIMESTAMP       DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT passenger_fk_request
+        FOREIGN KEY (Passenger_Request_ID) 
+        REFERENCES  Passenger_Request (Request_ID)
+        ON DELETE CASCADE,
+    CONSTRAINT passenger_fk_ride
+        FOREIGN KEY (Ride_ID) 
+        REFERENCES  Matched_Ride (Ride_ID)
+        ON DELETE CASCADE,
+    CONSTRAINT payment_method_passenger_match
+        CHECK (Payment_Method IN ('Venmo','Cash','Gas')),
+    CONSTRAINT payment_status_passenger
+        CHECK (Payment_Status IN ('P','C','R','U'))
+);
+
+CREATE TABLE Commission_Rate  
+(
+    Commission_ID               NUMBER      DEFAULT Commission_Rate_Seq.NEXTVAL PRIMARY KEY,
+    Driver_Commission_Amount    NUMBER      DEFAULT 0   NOT NULL,
+    Passenger_Commission_Amount NUMBER      DEFAULT 0   NOT NULL,
+    Created_Timestamp           TIMESTAMP       DEFAULT CURRENT_TIMESTAMP,
+    Updated_Timestamp           TIMESTAMP       DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE Driver_Comp_Transaction  
+(
+    Driver_Transaction_ID   NUMBER          DEFAULT Driver_Comp_Transaction_Seq.NEXTVAL PRIMARY KEY,
+    Ride_ID                 NUMBER          NOT NULL,
+    Driver_Commission_ID    NUMBER          NOT NULL,
+    Payment_Status          CHAR(1)         NOT NULL,
+    Created_Timestamp       TIMESTAMP       DEFAULT CURRENT_TIMESTAMP,
+    Updated_Timestamp       TIMESTAMP       DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT driver_fk_ride
+        FOREIGN KEY (Ride_ID) 
+        REFERENCES  Matched_Ride (Ride_ID)
+        ON DELETE CASCADE,
+    CONSTRAINT driver_fk_commission
+        FOREIGN KEY (Driver_Commission_ID) 
+        REFERENCES Commission_Rate (Commission_ID)
+        ON DELETE CASCADE,
+    CONSTRAINT payment_status_driver_comp
+        CHECK (Payment_Status IN ('P','C','R','U'))
+);
+
+CREATE TABLE Passenger_Comp_Transaction  
+(
+    Passenger_Transaction_ID NUMBER          DEFAULT Passenger_Comp_Transaction_Seq.NEXTVAL  PRIMARY KEY,
+    Passenger_Match_ID       NUMBER          NOT NULL,
+    Passenger_Commission_ID  NUMBER          NOT NULL,
+    Payment_Status           CHAR(1)         NOT NULL,
+    Created_Timestamp        TIMESTAMP       DEFAULT CURRENT_TIMESTAMP,
+    Updated_Timestamp        TIMESTAMP       DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT passenger_fk_match
+        FOREIGN KEY (Passenger_Match_ID) 
+        REFERENCES Passenger_Match (Passenger_Match_ID),
+    CONSTRAINT passenger_fk_commission
+        FOREIGN KEY (Passenger_Commission_ID) 
+        REFERENCES Commission_Rate (Commission_ID),
+    CONSTRAINT payment_status_passenger_comp
+        CHECK (Payment_Status IN ('P','C','R','U'))
+);
+
+CREATE TABLE App_Functions  
+(
+    App_Function_ID         NUMBER          DEFAULT App_Functions_Seq.NEXTVAL   PRIMARY KEY,
+    App_Function_Desc       VARCHAR(100)    NOT NULL,
+    Start_Date              DATE            NOT NULL,
+    End_Date                DATE,
+    Created_Timestamp       TIMESTAMP       DEFAULT CURRENT_TIMESTAMP,
+    Updated_Timestamp       TIMESTAMP       DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE Office_Locations  
+(
+    Office_ID               NUMBER          DEFAULT Office_Locations_Seq.NEXTVAL    PRIMARY KEY,
+    Capacity                NUMBER          DEFAULT 0   NOT NULL,
+    Annual_Rent             NUMBER          DEFAULT 0   NOT NULL,
+    Utilities_Cost          NUMBER          DEFAULT 0   NOT NULL,
+    Created_Timestamp       TIMESTAMP       DEFAULT CURRENT_TIMESTAMP,
+    Updated_Timestamp       TIMESTAMP       DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE Employee  
+(
+    Employee_ID             NUMBER          DEFAULT Employee_Seq.NEXTVAL    PRIMARY KEY,
+    Office_ID               NUMBER          NOT NULL,
+    First_Name              VARCHAR(50)     NOT NULL,
+    Last_Name               VARCHAR(50)     NOT NULL,
+    Email                   VARCHAR(50)     NOT NULL    UNIQUE,
+    Phone                   CHAR(12)        NOT NULL,
+    Designation             VARCHAR(50)     NOT NULL,
+    Annual_Compensation     NUMBER          DEFAULT 0   NOT NULL,
+    Created_Timestamp       TIMESTAMP       DEFAULT CURRENT_TIMESTAMP,
+    Updated_Timestamp       TIMESTAMP       DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT employee_fk_office
+        FOREIGN KEY (Office_ID) 
+        REFERENCES Office_Locations (Office_ID),
+    CONSTRAINT email_length_check_employee
+        CHECK (LENGTH(Email) >= 7)
+);
+
+CREATE TABLE App_Function_Details  
+(
+    Detail_ID               NUMBER          DEFAULT App_Function_Details_Seq.NEXTVAL    PRIMARY KEY,
+    Employee_ID             NUMBER          NOT NULL,
+    App_Function_ID         NUMBER          NOT NULL,
+    Start_Timestamp         TIMESTAMP       NOT NULL,
+    End_Timestamp           TIMESTAMP,
+    Development_Cost        NUMBER          DEFAULT 0   NOT NULL,
+    Maintenance_Cost        NUMBER          DEFAULT 0   NOT NULL,
+    Created_Timestamp       TIMESTAMP       DEFAULT CURRENT_TIMESTAMP,
+    Updated_Timestamp       TIMESTAMP       DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT app_fk_employee
+        FOREIGN KEY (Employee_ID) 
+        REFERENCES Employee (Employee_ID),
+    CONSTRAINT app_fk_app
+        FOREIGN KEY (App_Function_ID) 
+        REFERENCES App_Functions (App_Function_ID)
+);
+
+INSERT INTO Student(Student_ID,Uni_ID,University_Name,First_Name,Last_Name,Email,Phone,Is_Driver,Drivers_License_Number,Drivers_License_State,Created_Timestamp,Updated_Timestamp)
+VALUES (DEFAULT, 'ams9694', 'University of Texas at Austin', 'Avery','Shepherd','ashepherd@gmail.com','2109372296','Y','12345678','TX',DEFAULT,DEFAULT);
+INSERT INTO Student(Student_ID,Uni_ID,University_Name,First_Name,Last_Name,Email,Phone,Is_Driver,Created_Timestamp,Updated_Timestamp)
+VALUES (DEFAULT, 'ac79277', 'University of Texas at Austin', 'Aritra','Chowdhury','achowd@gmail.com','5129657698','N',DEFAULT,DEFAULT);
+INSERT INTO Car(Car_ID,student_id,car_model,car_name,Car_License_Number,Car_Insurance_Number,Created_Timestamp,Updated_Timestamp)
+VALUES(DEFAULT,1,'Ford','Explorer','VDF1987','ahwuif82983rhf',DEFAULT,DEFAULT);
+INSERT INTO Payment_Info (Payment_ID,student_ID,first_name,middle_name,last_name,card_number,ccv,exp_date,street_address,city,state,zipcode,Created_Timestamp,Updated_Timestamp)
+VALUES (DEFAULT, 1,'Avery','Morgan Moncreiff','Shepherd',123456789098,123,0723,'123 Speedway','Austin','TX',78705,DEFAULT,DEFAULT);
+INSERT INTO Payment_Info (Payment_ID,student_ID,first_name,last_name,card_number,ccv,exp_date,street_address,city,state,zipcode,Created_Timestamp,Updated_Timestamp)
+VALUES (DEFAULT, 2,'Aritra','Chowdhury',07892534987,431,0987,'123 Happy Lane','Austin','TX',78701,DEFAULT,DEFAULT);
+INSERT INTO Driver_Request(Request_ID,Car_ID,Allowed_Passengers,Departure_Zip,Arrival_Zip,Departure_Timestamp,Arrival_Timestamp,Is_Flexible,Request_Status,Payment_Method,Minimum_Payment,Notes,Created_Timestamp,Updated_Timestamp)
+VALUES (DEFAULT,1,2,78705,78301,TO_TIMESTAMP('10-SEP-21 14:10:10.123000','DD-MON-RR HH24:MI:SS.FF'),TO_TIMESTAMP('10-SEP-21 16:10:10.123000','DD-MON-RR HH24:MI:SS.FF'),'N','M','Venmo',12,'Please provide snacks as well',DEFAULT,DEFAULT);
+INSERT INTO Passenger_Request(Request_ID,Student_ID,passenger_count,Departure_Zip,Arrival_Zip,Departure_Timestamp,Arrival_Timestamp,Is_Flexible,Request_Status,Payment_Method,Maximum_Payment,Notes,Created_Timestamp,Updated_Timestamp)
+VALUES (DEFAULT,2,2,78705,78301,TO_TIMESTAMP('10-SEP-21 14:10:10.123000','DD-MON-RR HH24:MI:SS.FF'),TO_TIMESTAMP('10-SEP-21 16:10:10.123000','DD-MON-RR HH24:MI:SS.FF'),'N','M','Venmo',20,'I will wear a mask',DEFAULT,DEFAULT);
+INSERT INTO Matched_Ride (Ride_ID,Driver_Request_ID,Passengers_Traveling,Departure_ZIP,Arrival_ZIP,Departure_Timestamp,Arrival_Timestamp,Ride_Status,Total_payment,Created_Timestamp,Updated_Timestamp)
+VALUES (DEFAULT, 1,2,78705,78301,TO_TIMESTAMP('10-SEP-21 14:10:10.123000','DD-MON-RR HH24:MI:SS.FF'),TO_TIMESTAMP('10-SEP-21 16:10:10.123000','DD-MON-RR HH24:MI:SS.FF'),'P',12,DEFAULT,DEFAULT);
+INSERT INTO Passenger_Match (Passenger_Match_ID,Passenger_Request_ID,Ride_ID,Departure_Timestamp,Arrival_Timestamp,Payment_Method,Payment_Status,Passenger_Payable,Created_Timestamp,Updated_Timestamp)
+VALUES (DEFAULT,1,1,TO_TIMESTAMP('10-SEP-21 14:10:10.123000','DD-MON-RR HH24:MI:SS.FF'),TO_TIMESTAMP('10-SEP-21 16:00:10.123000','DD-MON-RR HH24:MI:SS.FF'),'Venmo','P',12,DEFAULT,DEFAULT);
+INSERT INTO Commission_Rate (Commission_ID,Driver_Commission_Amount,Passenger_Commission_Amount,Created_Timestamp,Updated_Timestamp)
+VALUES (DEFAULT,1,1,DEFAULT,DEFAULT);
+INSERT INTO Driver_Comp_Transaction (Driver_Transaction_ID,Ride_ID,Driver_Commission_ID,Payment_Status,Created_Timestamp,Updated_Timestamp)
+VALUES (DEFAULT,1,1,'P',DEFAULT,DEFAULT);
+INSERT INTO Passenger_Comp_Transaction (Passenger_Transaction_ID,Passenger_Match_ID,Passenger_Commission_ID,Payment_Status,Created_Timestamp,Updated_Timestamp)
+VALUES (DEFAULT,1,1,'P',DEFAULT,DEFAULT);
+INSERT INTO App_Functions (App_Function_ID,App_Function_Desc,Start_Date,End_Date,Created_Timestamp,Updated_Timestamp)
+VALUES (DEFAULT, 'makes buttons clickable',TO_DATE('2021/05/03', 'yyyy/mm/dd'),TO_DATE('2021/05/10', 'yyyy/mm/dd'),DEFAULT,DEFAULT);
+INSERT INTO Office_Locations(Office_ID,Capacity,Annual_Rent,Utilities_Cost,Created_Timestamp,Updated_Timestamp)
+VALUES (DEFAULT,12,89908,430,DEFAULT,DEFAULT);
+INSERT INTO Employee (Employee_ID,Office_ID,First_Name,Last_Name,Email,Phone,Designation,Annual_Compensation,Created_Timestamp,Updated_Timestamp)
+VALUES (DEFAULT,1,'Vishal','Gupta','vgupta@gmail.com',512876453,'Senior Data Scientist',150000,DEFAULT,DEFAULT);
+INSERT INTO App_Function_Details(Detail_ID,Employee_ID,App_Function_ID,Start_Timestamp,Development_Cost,Maintenance_Cost,Created_Timestamp,Updated_Timestamp)
+VALUES (DEFAULT,1,1,TO_TIMESTAMP('27-NOV-21 14:10:10.123000','DD-MON-RR HH24:MI:SS.FF'),1600,30,DEFAULT,DEFAULT);
+
+
+
