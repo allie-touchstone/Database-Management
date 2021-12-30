@@ -24,3 +24,7 @@ Group Assignment #3
 Group Assignment #4
 * Summary and Subquery Instructions
 * Summary and Subquery Starter DDL Script
+
+Group Assignment #5
+* PL and SQL PDF
+* PL and SQL Script
