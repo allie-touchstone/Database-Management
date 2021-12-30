@@ -23,8 +23,8 @@ SET SERVEROUTPUT ON;
 /*
 
 Write a script that uses an anonymous block of PL/SQL code to declare a variable called count_reservations and set it to the count of all reservations placed by the customer whose ID is 100002. 
-If the count is greater than 15, then the block should display a message that says, ìThe customer has placed more than 15 reservations.î 
-Otherwise, the block output should say ìThe customer has placed 15 or fewer reservations.î 
+If the count is greater than 15, then the block should display a message that says, ‚ÄúThe customer has placed more than 15 reservations.‚Äù 
+Otherwise, the block output should say ‚ÄúThe customer has placed 15 or fewer reservations.‚Äù 
 Make sure that you set the server output to be on before the PL/SQL block of code and include that at the top of your submission.
 
 */
@@ -96,12 +96,12 @@ ROLLBACK;
 --- QUESTION 2
 /* 
 
-Run the ìset define on;î command to allow substitution variables.  
+Run the ‚Äúset define on;‚Äù command to allow substitution variables.  
 Update the previous statement but this time prompt the user to enter a customer ID and dynamically use that input to pull the count of reservations for the customer ID the user entered.  
 Also update the output as well to include the customer ID and the count of reservations like so:
-e.g. When you prompt the user and they enter 100002, it should return something like ìThe customers with customer ID: 100002, has placed more than 15 reservations.î 
-If you enter a customer ID = 100003, it should say something like ìThe customers with customer ID: 100003, has placed 15 or fewer reservations.î. 
-Hint: youíll need to adjust the SELECT to pull in customer ID with the count which will create a new to aggregate (i.e. group) data.
+e.g. When you prompt the user and they enter 100002, it should return something like ‚ÄúThe customers with customer ID: 100002, has placed more than 15 reservations.‚Äù 
+If you enter a customer ID = 100003, it should say something like ‚ÄúThe customers with customer ID: 100003, has placed 15 or fewer reservations.‚Äù. 
+Hint: you‚Äôll need to adjust the SELECT to pull in customer ID with the count which will create a new to aggregate (i.e. group) data.
 
 */
 
@@ -172,7 +172,7 @@ END;
 Write a script that uses an anonymous block of PL/SQL code that uses a bulk collect to capture a list of available features that begin with the letter P. 
 The rows in this result set should be sorted by feature name. 
 Then, the code should display a string variable for each feature and its feature.  
-NOTE: Weíre to just going to assign a number for the feature based on itís place in the list and not its actual feature_id. 
+NOTE: We‚Äôre to just going to assign a number for the feature based on it‚Äôs place in the list and not its actual feature_id. 
 Your output should look like this: 
     Hotel feature 1: Parking Included
     Hotel feature 2: Pets Allowed
@@ -245,7 +245,7 @@ END;
 Take your script from problem 3 and change it from an anonymous block of PL/SQL code to a named procedure called insert_customer that allows you to 
     insert a new customer by passing in customer ID, first name, last name, email, phone, address_line_1, city, state, and zip. 
 Make sure that you are still using the sequence to generate the customer ID.  
-Handle exceptions generally by rolling back the transaction ìwhen othersî occurs. 
+Handle exceptions generally by rolling back the transaction ‚Äúwhen others‚Äù occurs. 
 Once your procedure compiles correctly, test it with the following calls.
     CALL insert_customer ('Joseph', 'Lee', 'jo12@yahoo.com', '773-222-3344', 'Happy street', 'Chicago', 'Il', '60602');
     BEGIN
