@@ -4,12 +4,12 @@ INTRO TO DATA MANAGEMENT
 HOMEWORK 3: DATABASE QUERYING ASSIGNMENT
 
 by
-Abhinav Sharma      ass2575
-Allie Touchstone    awt529
-Aritra Chowdhury    ac79277
-Avery Shepherd      ams9694
-Harsh Mehta         hdm564
-Vishal Gupta        vg22846
+Abhinav Sharma    
+Allie Touchstone 
+Aritra Chowdhury    
+Avery Shepherd      
+Harsh Mehta         
+Vishal Gupta
 
 This Homework was worked on by all 6 people and the best combination of code was ultimately decided on. 
 
