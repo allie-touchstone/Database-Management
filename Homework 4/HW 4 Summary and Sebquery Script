@@ -4,12 +4,12 @@ INTRO TO DATA MANAGEMENT
 HOMEWORK 4: SUMMARY / SUBQUERY
 
 by
-Abhinav Sharma      ass2575
-Allie Touchstone    awt529
-Aritra Chowdhury    ac79277
-Avery Shepherd      ams9694
-Harsh Mehta         hdm564
-Vishal Gupta        vg22846
+Abhinav Sharma    
+Allie Touchstone 
+Aritra Chowdhury    
+Avery Shepherd      
+Harsh Mehta         
+Vishal Gupta
 
 This Homework was worked on by all 6 people and the best combination of code was ultimately decided on. 
 
@@ -38,7 +38,7 @@ We want to know the number of reservations and earliest first check_in_date for 
 Task: Write a SELECT statement that returns one row for each customer that has a reservation with the following columns and please use table aliases as well:
 The customer_id column from the customer table.   
 The number of reservations on the reservation table with column alias of Number_of_Reservations
-The earliest check_in_date for that customer. This helps us know how long they’ve been doing business with us.  Give this column the alias of earliest_check_in.
+The earliest check_in_date for that customer. This helps us know how long theyâ€™ve been doing business with us.  Give this column the alias of earliest_check_in.
 
 */
 
@@ -52,7 +52,7 @@ GROUP BY C.customer_id;
 --- QUESTION 3
 /* 
 
-We’re curious how popular we are based on where customers are from.
+Weâ€™re curious how popular we are based on where customers are from.
 
 Task: Write a SELECT statement that pulls info about customers and summarizes it by city and state.   The following columns should be returned:
 The city column from the customer table
@@ -71,14 +71,14 @@ ORDER BY state, avg_credits_earned DESC;
 --- QUESTION 4
 /* 
 
-We’d like to know how many times each customer has stayed in a particular room at the South Austin location (i.e. Location_ID 1). Write a SELECT statement that properly joins customer, reservation, reservation_details, and room tables and then returns the following columns for only reservations at location 1:
+Weâ€™d like to know how many times each customer has stayed in a particular room at the South Austin location (i.e. Location_ID 1). Write a SELECT statement that properly joins customer, reservation, reservation_details, and room tables and then returns the following columns for only reservations at location 1:
 
 The customer_id column
 The last_name column
 The room_number column
 The count of reservations (i.e. reservation_id) for each room with a column alias of stay_count
 Sort the result set by customer_id ascending and then by the stay_count alias in descending order.
-This query should highlight for each customer if they’ve had more than 1 stay in a room or not. 
+This query should highlight for each customer if theyâ€™ve had more than 1 stay in a room or not. 
     
 */
 
@@ -98,7 +98,7 @@ ORDER BY C.customer_id, stay_count DESC;
 --- QUESTION 5
 /* 
 
-Make a copy of the previous query and let’s make two updates to it. We decided we only want to look at completed reservations and not in-progress or future reservations so filter to only show status of C.  
+Make a copy of the previous query and letâ€™s make two updates to it. We decided we only want to look at completed reservations and not in-progress or future reservations so filter to only show status of C.  
 Then filter out any results that have a stay_count of 2 or less.  This should result in showing us who has already stayed in a particular room 3 or more times.
 
 */
@@ -123,7 +123,7 @@ ORDER BY C.customer_id, stay_count DESC;
 
 We want to know the anticipated number of guests by location and check_in_date.
 
-Part A - Write a query that creates a report to show the sum of number_of_guests on Reservation broken out by the location_name and check_in_date for all reservations that have a future check_in_date (i.e. greater than today’s date).  The report should include the following
+Part A - Write a query that creates a report to show the sum of number_of_guests on Reservation broken out by the location_name and check_in_date for all reservations that have a future check_in_date (i.e. greater than todayâ€™s date).  The report should include the following
 
 The location_name column from the location table
 The check_in_date column from the reservation table
@@ -131,7 +131,7 @@ The sum of the number_of_guests column in the reservation table
 Filter data to always show only records where the check_in_date is in the future.
 Use the ROLLUP operator to include a row that gives the subtotal location_name, check_in_date. 
 
-Part B – Explain in a commented sentence how the CUBE operator is different than ROLLUP and why it is useful.
+Part B â€“ Explain in a commented sentence how the CUBE operator is different than ROLLUP and why it is useful.
 
 */
 
@@ -174,7 +174,7 @@ GROUP BY F.feature_name
 --- QUESTION 8
 /* 
 
-Write a query that returns the same result set as this select statement, but don’t use a left join this time. 
+Write a query that returns the same result set as this select statement, but donâ€™t use a left join this time. 
 Instead, use a subquery in a WHERE clause that uses the NOT IN keyword. 
 Hint: Start by getting a list of all the customer_ids in the reservation table. 
 This will be used as the subquery in a query that pulls all customers where the customer_id is not in that list.
@@ -197,7 +197,7 @@ WHERE customer_id NOT IN (
 
 We want to know all the customers that have earned more than the average number of stay credits.
 
-Write a query statement that answers this question: Which customers have a stay_credits_earned balance that’s greater than the average stay_credits_earned all customers?
+Write a query statement that answers this question: Which customers have a stay_credits_earned balance thatâ€™s greater than the average stay_credits_earned all customers?
 Return the first_name, last_name, email, phone, and stay_credits_earned for each customer.
 Sort the results by the stay_credits_earned from highest to lowest
 
@@ -247,7 +247,7 @@ ORDER BY credits_remaining DESC;
 --- QUESTION 11
 /* 
 
-Goal: We want to know who is going to be staying in a room that hasn’t been used much. We define a room that hasn’t been used much, as a room that has been reserved less than 5 times
+Goal: We want to know who is going to be staying in a room that hasnâ€™t been used much. We define a room that hasnâ€™t been used much, as a room that has been reserved less than 5 times
 
 Write a query that returns the confirmation_nbr, date_created, check_in_date, status, and room_id of each reservation that exists for a room that has less than 5 reservation_detail records. 
 We want you to utilize a subquery to do this.  
@@ -277,7 +277,7 @@ Goal: We want to know which customers that are using Mastercard (i.e. MSTR) have
 
 Using an inline view, write a statement that will return one row per customer that has only 1 completed reservation and is using Mastercard. 
 Each row should include the following columns we need to process the credit:  cardholder_first_name, cardholder_last_name, card_number, expiration_date, and cc_id
-Using an inline view means you will have a subquery in the main query’s FROM clause that acts as its own table that you will join customer_payment to.
+Using an inline view means you will have a subquery in the main queryâ€™s FROM clause that acts as its own table that you will join customer_payment to.
 HINT: Start by coding the subquery that pulls customer_id and the count of reservation_ids but only for reservations that have a status of C and only where the count of reservations is 1. 
 Then join this subquery as an inline view to the customer_payment table to complete the query.  
 After you have the subquery complete you can then incorporate it with the final outer query as an inline table join and then add a filter to the outer query that only shows cardholders using Mastercard (i.e. card_type of MSTR)
